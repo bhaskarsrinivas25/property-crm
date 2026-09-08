@@ -4,6 +4,7 @@ import CRMLayout from './layouts/CRMLayout'
 import Dashboard from './pages/Dashboard'
 import Leads from './pages/Leads'
 import Properties from './pages/Properties'
+import Customers from './pages/Customers'
 import PlaceholderPage from './pages/PlaceholderPage'
 
 function App() {
@@ -14,10 +15,34 @@ function App() {
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="leads" element={<Leads />} />
         <Route path="properties" element={<Properties />} />
-        <Route path="customers" element={<PlaceholderPage title="Customer Management" description="Keep your client relationships organized and accessible." />} />
-        <Route path="follow-ups" element={<PlaceholderPage title="Follow-up Management" description="Stay on top of conversations and next steps." />} />
-        <Route path="site-visits" element={<PlaceholderPage title="Site Visits" description="Coordinate upcoming property visits with your clients." />} />
-        <Route path="settings" element={<PlaceholderPage title="Settings" description="Workspace preferences will be available here." />} />
+        <Route path="customers" element={<Customers />} />
+        <Route
+          path="follow-ups"
+          element={
+            <PlaceholderPage
+              title="Follow-up Management"
+              description="Stay on top of conversations and next steps."
+            />
+          }
+        />
+        <Route
+          path="site-visits"
+          element={
+            <PlaceholderPage
+              title="Site Visits"
+              description="Coordinate upcoming property visits with your clients."
+            />
+          }
+        />
+        <Route
+          path="settings"
+          element={
+            <PlaceholderPage
+              title="Settings"
+              description="Workspace preferences will be available here."
+            />
+          }
+        />
       </Route>
     </Routes>
   )
