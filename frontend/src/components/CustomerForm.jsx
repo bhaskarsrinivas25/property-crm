@@ -22,7 +22,7 @@ function CustomerForm({ customer, onSubmit, onCancel, saving = false }) {
         notes: customer.notes || '',
       })
     } else {
-      setForm(emptyForm)
+      setForm({ ...emptyForm })
     }
 
     setErrors({})
@@ -95,95 +95,95 @@ function CustomerForm({ customer, onSubmit, onCancel, saving = false }) {
   }
 
   return (
-    <form className="crm-form" onSubmit={handleSubmit}>
+    <form className="lead-form customer-form" onSubmit={handleSubmit}>
       <div className="form-grid">
-        <div className="form-group">
-          <label htmlFor="name">
+        <label className="field">
+          <span>
             Name <span className="required">*</span>
-          </label>
+          </span>
 
           <input
-            id="name"
             name="name"
             type="text"
             value={form.name}
             onChange={handleChange}
             placeholder="Enter customer name"
+            disabled={saving}
           />
 
           {errors.name && (
-            <span className="form-error">{errors.name}</span>
+            <span className="field-error">{errors.name}</span>
           )}
-        </div>
+        </label>
 
-        <div className="form-group">
-          <label htmlFor="phone">
+        <label className="field">
+          <span>
             Phone <span className="required">*</span>
-          </label>
+          </span>
 
           <input
-            id="phone"
             name="phone"
             type="text"
             value={form.phone}
             onChange={handleChange}
             placeholder="Enter phone number"
+            disabled={saving}
           />
 
           {errors.phone && (
-            <span className="form-error">{errors.phone}</span>
+            <span className="field-error">{errors.phone}</span>
           )}
-        </div>
+        </label>
 
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
+        <label className="field">
+          <span>Email</span>
 
           <input
-            id="email"
             name="email"
             type="email"
             value={form.email}
             onChange={handleChange}
             placeholder="Enter email address"
+            disabled={saving}
           />
 
           {errors.email && (
-            <span className="form-error">{errors.email}</span>
+            <span className="field-error">{errors.email}</span>
           )}
-        </div>
+        </label>
 
-        <div className="form-group">
-          <label htmlFor="address">Address</label>
+        <label className="field">
+          <span>Address</span>
 
           <input
-            id="address"
             name="address"
             type="text"
             value={form.address}
             onChange={handleChange}
-            placeholder="Enter address"
+            placeholder="Enter customer address"
+            disabled={saving}
           />
 
           {errors.address && (
-            <span className="form-error">{errors.address}</span>
+            <span className="field-error">{errors.address}</span>
           )}
-        </div>
+        </label>
 
-        <div className="form-group form-group-full">
-          <label htmlFor="notes">Notes</label>
+        <label className="field field-wide">
+          <span>Notes</span>
 
           <textarea
-            id="notes"
             name="notes"
             value={form.notes}
             onChange={handleChange}
-            placeholder="Add customer notes"
+            placeholder="Add notes about this customer"
             rows="4"
+            disabled={saving}
           />
-        </div>
+        </label>
       </div>
 
-      <div className="form-actions">
+      <div className="modal-actions">
         <button
           type="button"
           className="secondary-button"

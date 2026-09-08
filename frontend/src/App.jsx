@@ -1,4 +1,3 @@
-import './App.css'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import CRMLayout from './layouts/CRMLayout'
 import Dashboard from './pages/Dashboard'
@@ -11,11 +10,31 @@ function App() {
   return (
     <Routes>
       <Route element={<CRMLayout />}>
-        <Route index element={<Navigate replace to="/dashboard" />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="leads" element={<Leads />} />
-        <Route path="properties" element={<Properties />} />
-        <Route path="customers" element={<Customers />} />
+        <Route
+          index
+          element={<Navigate replace to="/dashboard" />}
+        />
+
+        <Route
+          path="dashboard"
+          element={<Dashboard />}
+        />
+
+        <Route
+          path="leads"
+          element={<Leads />}
+        />
+
+        <Route
+          path="properties"
+          element={<Properties />}
+        />
+
+        <Route
+          path="customers"
+          element={<Customers />}
+        />
+
         <Route
           path="follow-ups"
           element={
@@ -25,6 +44,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="site-visits"
           element={
@@ -34,6 +54,7 @@ function App() {
             />
           }
         />
+
         <Route
           path="settings"
           element={

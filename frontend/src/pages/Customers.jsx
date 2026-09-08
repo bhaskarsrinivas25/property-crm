@@ -75,15 +75,15 @@ function Customers() {
 
   function handleAdd() {
     setEditingCustomer(null)
-    setShowForm(true)
     setViewingCustomer(null)
+    setShowForm(true)
     setError('')
   }
 
   function handleEdit(customer) {
     setEditingCustomer(customer)
-    setShowForm(true)
     setViewingCustomer(null)
+    setShowForm(true)
     setError('')
   }
 
@@ -108,7 +108,9 @@ function Customers() {
       await deleteCustomer(customer.id)
 
       setCustomers((previous) =>
-        previous.filter((item) => item.id !== customer.id)
+        previous.filter(
+          (item) => item.id !== customer.id
+        )
       )
 
       if (viewingCustomer?.id === customer.id) {
@@ -122,6 +124,11 @@ function Customers() {
   function handleCancel() {
     setShowForm(false)
     setEditingCustomer(null)
+    setError('')
+  }
+
+  function handleCloseDetails() {
+    setViewingCustomer(null)
     setError('')
   }
 
@@ -147,14 +154,24 @@ function Customers() {
   }, [customers, searchTerm])
 
   return (
-    <div className="page-container">
-      <div className="page-header">
+    <div className="customers-page">
+
+      {/* Page Header */}
+
+      <section className="customers-intro">
         <div>
-          <h1>Customers</h1>
-          <p>Manage your property customers and their information.</p>
+          <p className="eyebrow">
+            Customer management
+          </p>
+
+          <h2>Customers</h2>
+
+          <p className="muted">
+            Manage your property customers and their information.
+          </p>
         </div>
 
-        {!showForm && (
+        {!showForm && !viewingCustomer && (
           <button
             type="button"
             className="primary-button"
@@ -163,17 +180,23 @@ function Customers() {
             + Add Customer
           </button>
         )}
-      </div>
+      </section>
+
+      {/* API Error */}
 
       {error && (
-        <div className="error-message">
-          {error}
+        <div className="api-error">
+          <strong>Something went wrong</strong>
+          <span>{error}</span>
         </div>
       )}
 
-      {showForm ? (
-        <div className="form-card">
-          <div className="section-header">
+      {/* Add / Edit Customer */}
+
+      {showForm && (
+        <section className="panel customers-panel">
+
+          <div className="customers-toolbar">
             <div>
               <h2>
                 {editingCustomer
@@ -181,9 +204,9 @@ function Customers() {
                   : 'Add Customer'}
               </h2>
 
-              <p>
+              <p className="muted">
                 {editingCustomer
-                  ? 'Update customer information.'
+                  ? 'Update the customer information below.'
                   : 'Enter the customer details below.'}
               </p>
             </div>
@@ -195,95 +218,137 @@ function Customers() {
             onCancel={handleCancel}
             saving={saving}
           />
-        </div>
-      ) : viewingCustomer ? (
-        <div className="details-card">
-          <div className="section-header">
+
+        </section>
+      )}
+
+      {/* Customer Details */}
+
+      {!showForm && viewingCustomer && (
+        <section className="panel customers-panel">
+
+          <div className="customers-toolbar">
             <div>
               <h2>Customer Details</h2>
-              <p>Complete information about this customer.</p>
+
+              <p className="muted">
+                Complete information about this customer.
+              </p>
             </div>
 
             <button
               type="button"
               className="secondary-button"
-              onClick={() => setViewingCustomer(null)}
+              onClick={handleCloseDetails}
             >
               Close
             </button>
           </div>
 
-          <div className="details-grid">
-            <div className="detail-item">
-              <span className="detail-label">Name</span>
-              <span className="detail-value">
+          <div className="customer-details">
+
+            <div>
+              <span>Name</span>
+              <strong>
                 {viewingCustomer.name}
-              </span>
+              </strong>
             </div>
 
-            <div className="detail-item">
-              <span className="detail-label">Phone</span>
-              <span className="detail-value">
+            <div>
+              <span>Phone</span>
+              <strong>
                 {viewingCustomer.phone}
-              </span>
+              </strong>
             </div>
 
-            <div className="detail-item">
-              <span className="detail-label">Email</span>
-              <span className="detail-value">
+            <div>
+              <span>Email</span>
+              <strong>
                 {viewingCustomer.email || '—'}
-              </span>
+              </strong>
             </div>
 
-            <div className="detail-item">
-              <span className="detail-label">Address</span>
-              <span className="detail-value">
+            <div>
+              <span>Address</span>
+              <strong>
                 {viewingCustomer.address || '—'}
-              </span>
+              </strong>
             </div>
 
-            <div className="detail-item detail-item-full">
-              <span className="detail-label">Notes</span>
-              <span className="detail-value">
+            <div className="details-wide">
+              <span>Notes</span>
+              <strong>
                 {viewingCustomer.notes || '—'}
-              </span>
+              </strong>
             </div>
 
-            <div className="detail-item">
-              <span className="detail-label">Created At</span>
-              <span className="detail-value">
+            <div>
+              <span>Created At</span>
+              <strong>
                 {formatDate(viewingCustomer.createdAt)}
-              </span>
+              </strong>
             </div>
 
-            <div className="detail-item">
-              <span className="detail-label">Last Updated</span>
-              <span className="detail-value">
+            <div>
+              <span>Last Updated</span>
+              <strong>
                 {formatDate(viewingCustomer.updatedAt)}
-              </span>
+              </strong>
             </div>
+
           </div>
-        </div>
-      ) : (
-        <>
-          <div className="toolbar">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Search customers by name, phone, email or address..."
-              value={searchTerm}
-              onChange={(event) =>
-                setSearchTerm(event.target.value)
-              }
-            />
+        </section>
+      )}
+
+      {/* Customer List */}
+
+      {!showForm && !viewingCustomer && (
+        <section className="panel customers-panel">
+
+          <div className="customers-toolbar">
+
+            <div>
+              <h2>Customer List</h2>
+
+              <p className="muted">
+                {customers.length}{' '}
+                customer
+                {customers.length === 1
+                  ? ''
+                  : 's'} in your CRM.
+              </p>
+            </div>
+
+            <label className="search-field">
+              <span aria-hidden="true">⌕</span>
+
+              <input
+                type="search"
+                placeholder="Search customers..."
+                value={searchTerm}
+                onChange={(event) =>
+                  setSearchTerm(event.target.value)
+                }
+                aria-label="Search customers"
+              />
+            </label>
+
           </div>
 
           {loading ? (
-            <div className="empty-state">
-              <p>Loading customers...</p>
+
+            <div className="loading-state">
+              Loading customers...
             </div>
+
           ) : filteredCustomers.length === 0 ? (
+
             <div className="empty-state">
+
+              <div className="empty-state-icon">
+                👤
+              </div>
+
               <h3>
                 {searchTerm
                   ? 'No customers found'
@@ -305,17 +370,25 @@ function Customers() {
                   + Add Customer
                 </button>
               )}
+
             </div>
+
           ) : (
-            <CustomerTable
-              customers={filteredCustomers}
-              onView={handleView}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
+
+            <div className="table-scroll">
+              <CustomerTable
+                customers={filteredCustomers}
+                onView={handleView}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </div>
+
           )}
-        </>
+
+        </section>
       )}
+
     </div>
   )
 }
@@ -326,7 +399,9 @@ function getErrorMessage(error) {
   }
 
   if (error.response?.data?.errors) {
-    return Object.values(error.response.data.errors).join(', ')
+    return Object.values(
+      error.response.data.errors
+    ).join(', ')
   }
 
   if (error.response) {
