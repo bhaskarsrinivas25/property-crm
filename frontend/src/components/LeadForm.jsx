@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { blankLead, formatOption, leadSources, leadStatuses, propertyTypes } from '../data/leadOptions'
 
-function LeadForm({ initialLead, onCancel, onSubmit }) {
+function LeadForm({ initialLead, onCancel, onSubmit, serverError = '', submitting = false }) {
   const [form, setForm] = useState({ ...blankLead, ...initialLead })
   const [errors, setErrors] = useState({})
 
@@ -34,6 +34,7 @@ function LeadForm({ initialLead, onCancel, onSubmit }) {
 
   return (
     <form className="lead-form" noValidate onSubmit={handleSubmit}>
+      {serverError && <div className="form-server-error" role="alert">{serverError}</div>}
       <div className="form-grid">
         <label className="field"><span>Name *</span><input name="name" value={form.name} onChange={updateField} placeholder="e.g. Jordan Lee" />{errors.name && <small className="field-error">{errors.name}</small>}</label>
         <label className="field"><span>Phone *</span><input name="phone" value={form.phone} onChange={updateField} placeholder="+1 (415) 555-0184" inputMode="tel" />{errors.phone && <small className="field-error">{errors.phone}</small>}</label>
@@ -47,7 +48,7 @@ function LeadForm({ initialLead, onCancel, onSubmit }) {
         <label className="field"><span>Follow-up date</span><input name="followUpDate" type="date" value={form.followUpDate} onChange={updateField} /></label>
         <label className="field field-wide"><span>Notes</span><textarea name="notes" rows="3" value={form.notes} onChange={updateField} placeholder="Add context for the next conversation" /></label>
       </div>
-      <div className="modal-actions"><button className="secondary-button" type="button" onClick={onCancel}>Cancel</button><button className="primary-button" type="submit">Save lead</button></div>
+      <div className="modal-actions"><button className="secondary-button" type="button" onClick={onCancel} disabled={submitting}>Cancel</button><button className="primary-button" type="submit" disabled={submitting}>{submitting ? 'Saving...' : 'Save lead'}</button></div>
     </form>
   )
 }
