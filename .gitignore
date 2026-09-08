@@ -1,0 +1,27 @@
+# Maven build output
+**/target/
+
+# IDE metadata
+.idea/
+*.iml
+.vscode/
+
+# Environment and secret files
+.env
+.env.*
+!.env.example
+application-local.properties
+application-*.local.properties
+
+# Logs and local runtime files
+*.log
+hs_err_pid*
+
+# Node/frontend dependencies and build output
+**/node_modules/
+**/dist/
+**/build/
+
+# Operating system files
+.DS_Store
+Thumbs.db
