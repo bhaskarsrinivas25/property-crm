@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard'
 import Leads from './pages/Leads'
 import Properties from './pages/Properties'
 import Customers from './pages/Customers'
+import FollowUps from './pages/FollowUps'
+import SiteVisits from './pages/SiteVisits'
 import PlaceholderPage from './pages/PlaceholderPage'
 
 function App() {
@@ -37,22 +39,12 @@ function App() {
 
         <Route
           path="follow-ups"
-          element={
-            <PlaceholderPage
-              title="Follow-up Management"
-              description="Stay on top of conversations and next steps."
-            />
-          }
+          element={<FollowUps />}
         />
 
         <Route
           path="site-visits"
-          element={
-            <PlaceholderPage
-              title="Site Visits"
-              description="Coordinate upcoming property visits with your clients."
-            />
-          }
+          element={<SiteVisits />}
         />
 
         <Route
